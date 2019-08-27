@@ -2,7 +2,6 @@
 gensim_output/
 jstor_data/metadata
 jstor_data/ingram1
-venv2/
 venv/
 visualizations/
 
