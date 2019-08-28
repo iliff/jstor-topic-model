@@ -11,7 +11,8 @@ nlp = spacy.load('en_core_web_sm')
 stop_words = spacy.lang.en.stop_words.STOP_WORDS
 custom_stops = {'professor', 'cambridge', 'author', 'chapter', 'volume', 'essay', 'volumne', 'publish', 'page', 'paper',
                 'article', 'introduction', 'edition', 'cit', 'op', 'note', 'oxford', 'ed', 'routledge', 'york', 'eds',
-                'vol', 'blackwell', 'subscription', 'journal', 'department', 'pp'}
+                'vol', 'blackwell', 'subscription', 'journal', 'department', 'pp', 'mr', 'dr', 'press', 'london',
+                'cloth', 'book', 'john', 'paul', 'chicago', 'uk', 'david', 'robert', 'co', 'richard', 'william'}
 stop_words = stop_words.union(custom_stops)
 
 
@@ -21,7 +22,7 @@ def extract_tokens(ngrams):
     text_list = text.split('\n')
     for item in text_list:
         li = item.split('\t')
-        if len(li[0]) < 2:  # data cleanup: eliminate ocr noise
+        if len(li[0]) < 3:  # data cleanup: eliminate ocr noise and most roman numerals
             continue
         word = li[0] + ' '
         count = int(li[1])
