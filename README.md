@@ -1,5 +1,5 @@
 # jstor-topic-model
-Create and visualize topic models from jstor ngrams with gensim
+Create and visualize topic models from JSTOR's [Data for Research](https://www.jstor.org/dfr/about/creating-datasets) ngrams with gensim
 
 ### Directory Structure
 
