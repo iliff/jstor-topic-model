@@ -15,7 +15,7 @@ custom_stops = {'professor', 'cambridge', 'author', 'chapter', 'volume', 'essay'
                 'cloth', 'book', 'john', 'paul', 'chicago', 'uk', 'david', 'robert', 'co', 'richard', 'william'}
 stop_words = stop_words.union(custom_stops)
 
-
+#this function extracts tokens
 def extract_tokens(ngrams):
     article_words = []
     text = ngrams.rstrip()
