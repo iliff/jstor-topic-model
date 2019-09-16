@@ -18,7 +18,7 @@ custom_stops = {'professor', 'cambridge', 'author', 'chapter', 'volume', 'essay'
                 'cloth', 'book', 'john', 'paul', 'chicago', 'uk', 'david', 'robert', 'co', 'richard', 'william'}
 stop_words = stop_words.union(custom_stops)
 
-
+#this function extracts tokens
 def extract_tokens(ngrams):
     article_words = []
     text = ngrams.rstrip()
@@ -48,10 +48,10 @@ def process_text(string):
 
 
 ngram1_path = './jstor_data/ngram1/'
-txt_files = sorted(os.listdir(ngram1_path))[:5]
+txt_files = sorted(os.listdir(ngram1_path)) #this is where to indicate length
 
 metadata_path = './jstor_data/metadata/'
-xml_files = sorted(os.listdir(metadata_path))[:5]
+xml_files = sorted(os.listdir(metadata_path)) #this is where to indicate length
 
 docs = []
 corpus_metadata = {}
@@ -97,7 +97,6 @@ for xml_file, txt_file in zip(xml_files, txt_files):
 with open('./gensim_output/' + model_num + '/' + 'corpus_data_' + model_num + '.json', 'w') as outfile:
     json.dump(corpus_metadata, outfile)
 
-
 # gensim dictionary
 gensim_dictionary = corpora.Dictionary(docs)
 gensim_dictionary.filter_extremes(no_below=1000, no_above=0.7)
@@ -106,3 +105,4 @@ gensim_dictionary.save('./gensim_output/' + model_num + '/' + 'gensim_dictionary
 # gensim corpus
 gensim_corpus = [gensim_dictionary.doc2bow(doc) for doc in docs]
 corpora.MmCorpus.serialize('./gensim_output/' + model_num + '/' + 'gensim_corpus_' + model_num + '.mm', gensim_corpus)
+
