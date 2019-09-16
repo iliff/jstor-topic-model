@@ -5,6 +5,9 @@ import spacy
 from gensim import corpora
 import json
 
+# project set up
+model_num = 'test'
+os.mkdir('./gensim_output/' + model_num)
 
 # set up nlp for later use
 nlp = spacy.load('en_core_web_sm')
@@ -50,9 +53,8 @@ txt_files = sorted(os.listdir(ngram1_path))[:5]
 metadata_path = './jstor_data/metadata/'
 xml_files = sorted(os.listdir(metadata_path))[:5]
 
-
 docs = []
-corpus_dict = {}
+corpus_metadata = {}
 i = 0
 unwanted_titles = ['volume information', 'front matter', 'back matter']
 
@@ -79,7 +81,7 @@ for xml_file, txt_file in zip(xml_files, txt_files):
     article_dict['year'] = year.text
 
     key = 'doc_' + str(i)
-    corpus_dict[key] = article_dict
+    corpus_metadata[key] = article_dict
 
     # process txt file
     with open(file=ngram1_path + txt_file, encoding="utf8", mode="r") as f:
@@ -87,19 +89,20 @@ for xml_file, txt_file in zip(xml_files, txt_files):
         article_string = extract_tokens(ngrams)
         lemmas = process_text(article_string)
         docs.append(lemmas)
-        print('Finished document', str(i))  # display progress
+        if i % 100 == 0:
+            print('Finished document', str(i), '/', str(len(txt_files)))  # display progress
         i += 1
 
 # add output for metadatafile
-with open('./gensim_output/corpus_data.json', 'w') as outfile:
-    json.dump(corpus_dict, outfile)
+with open('./gensim_output/' + model_num + '/' + 'corpus_data_' + model_num + '.json', 'w') as outfile:
+    json.dump(corpus_metadata, outfile)
 
 
-# # gensim dictionary
-# gensim_dictionary = corpora.Dictionary(docs)
-# gensim_dictionary.filter_extremes(no_below=1000, no_above=0.7)
-# gensim_dictionary.save('./gensim_output/gensim_dictionary.dict')
-#
-# # gensim corpus
-# gensim_corpus = [gensim_dictionary.doc2bow(doc) for doc in docs]
-# corpora.MmCorpus.serialize('./gensim_output/gensim_corpus.mm', gensim_corpus)
+# gensim dictionary
+gensim_dictionary = corpora.Dictionary(docs)
+gensim_dictionary.filter_extremes(no_below=1000, no_above=0.7)
+gensim_dictionary.save('./gensim_output/' + model_num + '/' + 'gensim_dictionary_' + model_num + '.dict')
+
+# gensim corpus
+gensim_corpus = [gensim_dictionary.doc2bow(doc) for doc in docs]
+corpora.MmCorpus.serialize('./gensim_output/' + model_num + '/' + 'gensim_corpus_' + model_num + '.mm', gensim_corpus)
