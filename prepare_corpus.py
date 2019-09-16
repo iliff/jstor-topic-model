@@ -11,17 +11,18 @@ nlp = spacy.load('en_core_web_sm')
 stop_words = spacy.lang.en.stop_words.STOP_WORDS
 custom_stops = {'professor', 'cambridge', 'author', 'chapter', 'volume', 'essay', 'volumne', 'publish', 'page', 'paper',
                 'article', 'introduction', 'edition', 'cit', 'op', 'note', 'oxford', 'ed', 'routledge', 'york', 'eds',
-                'vol', 'blackwell', 'subscription', 'journal', 'department', 'pp'}
+                'vol', 'blackwell', 'subscription', 'journal', 'department', 'pp', 'mr', 'dr', 'press', 'london',
+                'cloth', 'book', 'john', 'paul', 'chicago', 'uk', 'david', 'robert', 'co', 'richard', 'william'}
 stop_words = stop_words.union(custom_stops)
 
-
+#this function extracts tokens
 def extract_tokens(ngrams):
     article_words = []
     text = ngrams.rstrip()
     text_list = text.split('\n')
     for item in text_list:
         li = item.split('\t')
-        if len(li[0]) < 2:  # data cleanup: eliminate ocr noise
+        if len(li[0]) < 3:  # data cleanup: eliminate ocr noise and most roman numerals
             continue
         word = li[0] + ' '
         count = int(li[1])
@@ -44,10 +45,10 @@ def process_text(string):
 
 
 ngram1_path = './jstor_data/ngram1/'
-txt_files = sorted(os.listdir(ngram1_path))[:5]
+txt_files = sorted(os.listdir(ngram1_path)) #this is where to indicate length
 
 metadata_path = './jstor_data/metadata/'
-xml_files = sorted(os.listdir(metadata_path))[:5]
+xml_files = sorted(os.listdir(metadata_path)) #this is where to indicate length
 
 
 docs = []
@@ -94,11 +95,11 @@ with open('./gensim_output/corpus_data.json', 'w') as outfile:
     json.dump(corpus_dict, outfile)
 
 
-# # gensim dictionary
-# gensim_dictionary = corpora.Dictionary(docs)
-# gensim_dictionary.filter_extremes(no_below=1000, no_above=0.7)
-# gensim_dictionary.save('./gensim_output/gensim_dictionary.dict')
-#
-# # gensim corpus
-# gensim_corpus = [gensim_dictionary.doc2bow(doc) for doc in docs]
-# corpora.MmCorpus.serialize('./gensim_output/gensim_corpus.mm', gensim_corpus)
+# gensim dictionary
+gensim_dictionary = corpora.Dictionary(docs)
+gensim_dictionary.filter_extremes(no_below=1000, no_above=0.7)
+gensim_dictionary.save('./gensim_output/gensim_dictionary.dict')
+
+# gensim corpus
+gensim_corpus = [gensim_dictionary.doc2bow(doc) for doc in docs]
+corpora.MmCorpus.serialize('./gensim_output/gensim_corpus.mm', gensim_corpus)
