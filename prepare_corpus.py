@@ -6,20 +6,31 @@ from gensim import corpora
 import json
 
 # project set up
-model_num = 'test'
+model_num = '02'
 os.mkdir('./gensim_output/' + model_num)
 
 # set up nlp for later use
 nlp = spacy.load('en_core_web_sm')
 stop_words = spacy.lang.en.stop_words.STOP_WORDS
+
 custom_stops = {'professor', 'cambridge', 'author', 'chapter', 'volume', 'essay', 'volumne', 'publish', 'page', 'paper',
                 'article', 'introduction', 'edition', 'cit', 'op', 'note', 'oxford', 'ed', 'routledge', 'york', 'eds',
                 'vol', 'blackwell', 'subscription', 'journal', 'department', 'pp', 'mr', 'dr', 'press', 'london',
-                'cloth', 'book', 'john', 'paul', 'chicago', 'uk', 'david', 'robert', 'co', 'richard', 'william'}
+                'cloth', 'book', 'john', 'paul', 'chicago', 'uk', 'david', 'robert', 'co', 'richard', 'william', 'der',
+                'und', 'des', 'de', 'viii', 'xii', 'von', 'vii', 'xiv', 'les', 'xiii', 'xvi', 'mit', 'prof', 'college',
+                'association', 'meeting', 'society', 'conference', 'committee', 'president', 'address', 'follow'}
+
 stop_words = stop_words.union(custom_stops)
 
-#this function extracts tokens
+roman_numerals = {'ⅰ', 'ⅱ', 'ⅲ', 'ⅳ', 'ⅴ', 'ⅵ', 'ⅶ', 'ⅷ', 'ⅸ', 'ⅹ', 'ⅺ', 'ⅻ', 'ⅹⅲ', 'ⅹⅳ', 'ⅹⅴ', 'ⅹⅵ', 'ⅹⅶ',
+                  'ⅹⅷ', 'ⅹⅸ', 'ⅹⅹ', 'ⅹⅺ', 'ⅹⅻ', 'ⅹⅹⅲ', 'ⅹⅹⅳ', 'ⅹⅹⅴ', 'ⅹⅹⅵ', 'ⅹⅹⅶ', 'ⅹⅹⅷ', 'ⅹⅹⅸ', 'ⅹⅹⅹ', 'ⅹⅹⅺ',
+                  'ⅹⅹⅻ', 'ⅹⅹⅹⅲ', 'ⅹⅹⅹⅳ', 'ⅹⅹⅹⅴ', 'ⅹⅹⅹⅵ', 'ⅹⅹⅹⅶ', 'ⅹⅹⅹⅷ', 'ⅹⅹⅹⅸ', 'ⅹⅼ', 'ⅹⅼⅰ', 'ⅹⅼⅱ', 'ⅹⅼⅲ', 'ⅹⅼⅳ',
+                  'ⅹⅼⅴ', 'ⅹⅼⅵ', 'ⅹⅼⅶ', 'ⅹⅼⅷ', 'ⅹⅼⅸ', 'ⅼ'}
+
+stop_words = stop_words.union(roman_numerals)
+
 def extract_tokens(ngrams):
+    """Extract and count tokens from JSTOR ngram data"""
     article_words = []
     text = ngrams.rstrip()
     text_list = text.split('\n')
@@ -39,6 +50,7 @@ def extract_tokens(ngrams):
 
 
 def process_text(string):
+    """Process text using SpaCy"""
     doc = nlp(string)
     tokens = [token for token in doc]
     lemmas_alpha = [token.lemma_ for token in tokens if token.is_alpha]
@@ -48,10 +60,10 @@ def process_text(string):
 
 
 ngram1_path = './jstor_data/ngram1/'
-txt_files = sorted(os.listdir(ngram1_path)) #this is where to indicate length
+txt_files = sorted(os.listdir(ngram1_path))  # this is where to indicate length
 
 metadata_path = './jstor_data/metadata/'
-xml_files = sorted(os.listdir(metadata_path)) #this is where to indicate length
+xml_files = sorted(os.listdir(metadata_path))  # this is where to indicate length
 
 docs = []
 corpus_metadata = {}
@@ -105,4 +117,3 @@ gensim_dictionary.save('./gensim_output/' + model_num + '/' + 'gensim_dictionary
 # gensim corpus
 gensim_corpus = [gensim_dictionary.doc2bow(doc) for doc in docs]
 corpora.MmCorpus.serialize('./gensim_output/' + model_num + '/' + 'gensim_corpus_' + model_num + '.mm', gensim_corpus)
-
