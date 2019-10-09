@@ -2,7 +2,7 @@
 import json
 from gensim import corpora, models
 
-model_num = ''  # change model number
+model_num = '02'  # change model number
 # # load corpus data json
 corpus_path = './gensim_output/' + model_num + '/'
 with open(corpus_path + 'corpus_data_' + model_num + '.json') as json_file:
@@ -30,5 +30,5 @@ for doc in gensim_corpus[:10]:
 
 print(data)
 
-with open(corpus_path + 'corpus_data_' + model_num + '.json', 'w') as json_file:
-    json.dump(data, json_file)
+# with open(corpus_path + 'corpus_data_' + model_num + '.json', 'w') as json_file:
+#     json.dump(data, json_file)

@@ -3,8 +3,17 @@ import logging
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-model_num = ''
+model_num = '02'
 path = './gensim_output/' + model_num + '/'
+
+# # gensim dictionary
+# gensim_dictionary = corpora.Dictionary(docs)
+# gensim_dictionary.filter_extremes(no_below=1000, no_above=0.7)
+# gensim_dictionary.save('./gensim_output/' + model_num + '/' + 'gensim_dictionary_' + model_num + '.dict')
+#
+# # gensim corpus
+# gensim_corpus = [gensim_dictionary.doc2bow(doc) for doc in docs]
+# corpora.MmCorpus.serialize('./gensim_output/' + model_num + '/' + 'gensim_corpus_' + model_num + '.mm', gensim_corpus)
 
 gensim_dictionary = corpora.Dictionary.load(path + 'gensim_dictionary_' + model_num + '.dict')
 

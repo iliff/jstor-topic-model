@@ -1,5 +1,5 @@
 # ignore contents of these folders
-gensim_output/
+base_corpus/
 jstor_data/metadata
 jstor_data/ingram1
 venv/
