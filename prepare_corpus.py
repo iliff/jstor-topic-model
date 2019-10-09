@@ -63,10 +63,10 @@ def process_text(string, custom_stops={}):
 def prepare_corpus(custom_stops={}):
     os.mkdir('./base_corpus/')
     ngram1_path = './jstor_data/ngram1/'
-    txt_files = sorted(os.listdir(ngram1_path))[:5]  # this is where to indicate length
+    txt_files = sorted(os.listdir(ngram1_path))
 
     metadata_path = './jstor_data/metadata/'
-    xml_files = sorted(os.listdir(metadata_path))[:5]  # this is where to indicate length
+    xml_files = sorted(os.listdir(metadata_path))
 
     docs = []
     corpus_metadata = OrderedDict()
