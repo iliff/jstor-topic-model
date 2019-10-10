@@ -3,22 +3,7 @@ import os
 from collections import OrderedDict
 import xml.etree.ElementTree as ET
 import spacy
-from gensim import corpora
 import json
-
-# project set up
-# model_num = '03'
-
-# set up nlp for later use
-# nlp = spacy.load('en_core_web_sm')
-# stop_words = spacy.lang.en.stop_words.STOP_WORDS
-#
-custom_stops = {'address', 'article', 'association', 'author', 'blackwell', 'book', 'cambridge', 'chapter', 'chicago',
-                'cit', 'cloth', 'co', 'college', 'committee', 'conference', 'david', 'de', 'department', 'der', 'des',
-                'dr', 'ed', 'edition', 'eds', 'essay', 'follow', 'introduction', 'john', 'journal', 'les', 'london',
-                'meeting', 'mit', 'mr', 'note', 'op', 'oxford', 'page', 'paper', 'paul', 'pp', 'president', 'press',
-                'prof', 'professor', 'publish', 'richard', 'robert', 'routledge', 'society', 'subscription', 'uk',
-                'und', 'vol', 'volume', 'volumne', 'von', 'william', 'york'}
 
 
 def extract_tokens(ngrams):
@@ -61,7 +46,7 @@ def process_text(string, custom_stops={}):
 
 def prepare_corpus(custom_stops={}):
     os.mkdir('./base_corpus/')
-    os.mddir('./models/')
+    os.mkdir('./models/')
     ngram1_path = './jstor_data/ngram1/'
     txt_files = sorted(os.listdir(ngram1_path))
 
