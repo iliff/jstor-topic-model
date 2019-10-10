@@ -8,7 +8,6 @@ import json
 
 # project set up
 # model_num = '03'
-# os.mkdir('./base_corpus/')
 
 # set up nlp for later use
 # nlp = spacy.load('en_core_web_sm')
@@ -62,6 +61,7 @@ def process_text(string, custom_stops={}):
 
 def prepare_corpus(custom_stops={}):
     os.mkdir('./base_corpus/')
+    os.mddir('./models/')
     ngram1_path = './jstor_data/ngram1/'
     txt_files = sorted(os.listdir(ngram1_path))
 
