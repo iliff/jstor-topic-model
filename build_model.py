@@ -50,9 +50,9 @@ def make_gensim_model(model_name, no_below, no_above, num_topics, passes):
 
 
 if __name__ == "__main__":
-    model_name = '02'
+    model_name = '03'
     no_below = 1000
     no_above = 0.7
-    num_topics = 10
+    num_topics = 40
     passes = 100
     make_gensim_model(model_name=model_name, no_below=no_below, no_above=no_above, num_topics=num_topics, passes=passes)
