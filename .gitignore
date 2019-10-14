@@ -1,9 +1,11 @@
 # ignore contents of these folders
-base_corpus/
+old/base_corpus/
 jstor_data/metadata
 jstor_data/ingram1
 venv/
 visualizations/
+old/
+notebooks/
 
 ### PyCharm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
