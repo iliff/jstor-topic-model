@@ -30,10 +30,10 @@ def process_text(string, custom_stops={}):
     """Process text using SpaCy"""
     nlp = spacy.load('en_core_web_sm')
     stop_words = spacy.lang.en.stop_words.STOP_WORDS
-    roman_numerals = {'ⅰ', 'ⅱ', 'ⅲ', 'ⅳ', 'ⅴ', 'ⅵ', 'ⅶ', 'ⅷ', 'ⅸ', 'ⅹ', 'ⅺ', 'ⅻ', 'ⅹⅲ', 'ⅹⅳ', 'ⅹⅴ', 'ⅹⅵ', 'ⅹⅶ',
-                      'ⅹⅷ', 'ⅹⅸ', 'ⅹⅹ', 'ⅹⅺ', 'ⅹⅻ', 'ⅹⅹⅲ', 'ⅹⅹⅳ', 'ⅹⅹⅴ', 'ⅹⅹⅵ', 'ⅹⅹⅶ', 'ⅹⅹⅷ', 'ⅹⅹⅸ', 'ⅹⅹⅹ', 'ⅹⅹⅺ',
-                      'ⅹⅹⅻ', 'ⅹⅹⅹⅲ', 'ⅹⅹⅹⅳ', 'ⅹⅹⅹⅴ', 'ⅹⅹⅹⅵ', 'ⅹⅹⅹⅶ', 'ⅹⅹⅹⅷ', 'ⅹⅹⅹⅸ', 'ⅹⅼ', 'ⅹⅼⅰ', 'ⅹⅼⅱ', 'ⅹⅼⅲ', 'ⅹⅼⅳ',
-                      'ⅹⅼⅴ', 'ⅹⅼⅵ', 'ⅹⅼⅶ', 'ⅹⅼⅷ', 'ⅹⅼⅸ', 'ⅼ'}
+    roman_numerals = {'i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x', 'xi', 'xii', 'xiii', 'xiv', 'xv',
+                      'xvi', 'xvii', 'xviii', 'xix', 'xx', 'xxi', 'xxii', 'xxiii', 'xxiv', 'xxv', 'xxvi', 'xxvii',
+                      'xxviii', 'xxix', 'xxx', 'xxxi', 'xxxii', 'xxxiii', 'xxxiv', 'xxxv', 'xxxvi', 'xxxvii', 'xxxviii',
+                      'xxxix', 'xl', 'xli', 'xlii', 'xliii', 'xliv', 'xlv', 'xlvi', 'xlvii', 'xlviii', 'xlix', 'l'}
     stop_words = stop_words.union(roman_numerals)
     stop_words = stop_words.union(custom_stops)
     doc = nlp(string)
