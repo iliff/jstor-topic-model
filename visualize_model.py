@@ -1,14 +1,16 @@
 from gensim import corpora, models
 import pyLDAvis.gensim
 
-model_num = ''
-path = './gensim_output/' + model_num + '/'
 
-gensim_dictionary = corpora.Dictionary.load(path + 'gensim_dictionary_' + model_num + '.dict')
-gensim_corpus = corpora.MmCorpus(path + 'gensim_corpus_' + model_num + '.mm')
+def visualize_model(model_name):
 
-lda_25 = models.ldamodel.LdaModel.load(path + 'lda_25_' + model_num + '.model')
+    path = './models/' + model_name + '/'
+    gensim_dictionary = corpora.Dictionary.load(path + model_name + '.dict')
+    gensim_corpus = corpora.MmCorpus(path + model_name + '.mm')
+    model = models.ldamodel.LdaModel.load(path + model_name + '.model')
+    model_viz = pyLDAvis.gensim.prepare(model, gensim_corpus, gensim_dictionary)
+    pyLDAvis.save_html(model_viz, path + model_name + '.html')
 
-lda_25_viz = pyLDAvis.gensim.prepare(lda_25, gensim_corpus, gensim_dictionary)
+if __name__ == '__main__':
 
-pyLDAvis.save_html(lda_25_viz, './visualizations/lda_' + model_num + '.html')
+    visualize_model(model_name='03')
