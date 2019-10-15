@@ -19,9 +19,13 @@ def make_gensim_corpus(gensim_dictionary, docs, model_path, model_name):
     return gensim_corpus
 
 
-def make_about_document(model_name, no_below, no_above, num_topics, passes, model_path):
-    about_text = 'Model Name: ' + model_name + '\n' + 'Number Below: ' + str(no_below) + '\n' + 'Number Above: ' \
-                 + str(no_above) + '\n' + 'Number of Topics: ' + str(num_topics) + '\n' + 'Passes: ' + str(passes) + ''
+def make_about_document(model_name, no_below, no_above, num_topics, passes, unique_tokens, model_path):
+    about_text = 'Model Name: ' + model_name + '\n' + \
+                 'Number of Topics: ' + str(num_topics) + '\n' + \
+                 'Number Below: ' + str(no_below) + '\n' + \
+                 'Number Above: ' + str(no_above) + '\n' + \
+                 'Number of unique tokens: ' + str(unique_tokens) + '\n' + \
+                 'Passes: ' + str(passes) + ''
     with open(model_path + '/' + 'about.txt', 'w') as f:
         f.write(about_text)
 
@@ -46,8 +50,9 @@ def make_gensim_model(model_name, no_below, no_above, num_topics, passes):
                           random_state=42)
     lda.save(model_path + '/' + model_name + '.model')
     # create about file
+    unique_tokens = len(gensim_dictionary)
     make_about_document(model_name=model_name, no_below=no_below, no_above=no_above, num_topics=num_topics,
-                        passes=passes, model_path=model_path)
+                        passes=passes, unique_tokens=unique_tokens, model_path=model_path)
 
 
 if __name__ == "__main__":
