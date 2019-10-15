@@ -8,7 +8,7 @@ def visualize_model(model_name):
     gensim_dictionary = corpora.Dictionary.load(path + model_name + '.dict')
     gensim_corpus = corpora.MmCorpus(path + model_name + '.mm')
     model = models.ldamodel.LdaModel.load(path + model_name + '.model')
-    model_viz = pyLDAvis.gensim.prepare(model, gensim_corpus, gensim_dictionary, sort_topics=False, mds='mmds')
+    model_viz = pyLDAvis.gensim.prepare(model, gensim_corpus, gensim_dictionary, sort_topics=False, mds='pcoa')
     pyLDAvis.save_html(model_viz, path + model_name + '.html')
 
 
