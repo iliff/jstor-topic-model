@@ -28,6 +28,7 @@ def make_about_document(model_name, no_below, no_above, num_topics, passes, mode
 
 def make_gensim_model(model_name, no_below, no_above, num_topics, passes):
     model_name=model_name
+    os.mkdir('./models/')
     os.mkdir('./models/' + model_name)
     model_path = './models/' + model_name
     # exract docs from json
@@ -50,9 +51,9 @@ def make_gensim_model(model_name, no_below, no_above, num_topics, passes):
 
 
 if __name__ == "__main__":
-    model_name = '03'
-    no_below = 1000
+    model_name = '01'
+    no_below = 5000
     no_above = 0.7
-    num_topics = 40
+    num_topics = 25
     passes = 100
     make_gensim_model(model_name=model_name, no_below=no_below, no_above=no_above, num_topics=num_topics, passes=passes)
